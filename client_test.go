@@ -27,11 +27,11 @@ func TestClient_UsignCer(t *testing.T) {
 		Payload: &MessagePayload{
 			Aps: &MessageAps{
 				Alert: &MessageAlert{
-					Title: "标题",
+					Title:    "标题",
 					SubTitle: "子标题",
-					Body:  "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
+					Body:     "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
 				},
-				Badeg: 100,
+				Badge: 100,
 				Sound: MessageAPNSSoundDefault,
 			},
 		},
@@ -66,18 +66,18 @@ func TestClient_UsignToken(t *testing.T) {
 	}
 
 	client := NewClientWithToken(token)
-	
+
 	m := &Message{
 		Topic:       "com.taihe.test.moblink",
 		DeviceToken: "ac8a3585166d60abd44867195b8f3edb63f4a2d1b2bb77c896913b7dd68716b8",
 		Payload: &MessagePayload{
 			Aps: &MessageAps{
 				Alert: &MessageAlert{
-					Title: "标题",
+					Title:    "标题",
 					SubTitle: "子标题",
-					Body:  "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
+					Body:     "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
 				},
-				Badeg: 100,
+				Badge: 100,
 				Sound: MessageAPNSSoundDefault,
 			},
 		},

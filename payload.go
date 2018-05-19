@@ -47,7 +47,7 @@ type MessagePayload struct {
 
 type MessageAps struct {
 	Alert            *MessageAlert `json:"alert"`
-	Badeg            int64         `json:"badeg,omitempty"`
+	Badge            int64         `json:"badge,omitempty"`
 	Sound            string        `json:"sound,omitempty"`
 	ContentAvailable int           `json:"content-available,omitempty"`
 	MutableContent   int           `json:"mutable-content,omitempty"`
