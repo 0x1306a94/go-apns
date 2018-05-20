@@ -49,19 +49,22 @@ type MessageAps struct {
 	Alert            *MessageAlert `json:"alert"`
 	Badge            int64         `json:"badge,omitempty"`
 	Sound            string        `json:"sound,omitempty"`
+	ThreadID         string        `json:"thread-id,omitempty"`
 	ContentAvailable int           `json:"content-available,omitempty"`
 	MutableContent   int           `json:"mutable-content,omitempty"`
 	Category         string        `json:"category,omitempty"`
 }
 
 type MessageAlert struct {
-	Title        string `json:"title"`
-	SubTitle     string `json:"subtitle,omitempty"`
-	Body         string `json:"body"`
-	TitleLocKey  string `json:"title-loc-key,omitempty"`
-	TitleLocArgs string `json:"title-loc-args,omitempty"`
-	ActionLocKey string `json:"action-loc-key,omitempty"`
-	LocKey       string `json:"loc-key,omitempty"`
-	LocArgs      string `json:"loc-args,omitempty"`
-	LaunchImage  string `json:"launch-image,omitempty"`
+	Title           string `json:"title"`
+	SubTitle        string `json:"subtitle,omitempty"`
+	Body            string `json:"body,omitempty"`
+	TitleLocKey     string `json:"title-loc-key,omitempty"`
+	TitleLocArgs    string `json:"title-loc-args,omitempty"`
+	SubTitleLocKey  string `json:"subtitle-loc-key,omitempty"`
+	SubTitleLocArgs string `json:"subtitle-loc-args,omitempty"`
+	ActionLocKey    string `json:"action-loc-key,omitempty"`
+	LocKey          string `json:"loc-key,omitempty"`
+	LocArgs         string `json:"loc-args,omitempty"`
+	LaunchImage     string `json:"launch-image,omitempty"`
 }

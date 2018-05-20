@@ -24,6 +24,8 @@ var (
 	MessagePayloadLargeError   = errors.New("the payload exceeds the maximum length and the maximum length is 4096 bytes")
 )
 
+// 官方文档
+// https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns
 type Message struct {
 	ApnsID      string          `json:"apns_id,omitempty"`
 	CollapseID  string          `json:"collapse_id,omitempty"`

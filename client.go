@@ -57,7 +57,7 @@ func NewClientWithCer(certificate tls.Certificate) *Client {
 	}
 	transport := &http2.Transport{
 		TLSClientConfig: tlsCfg,
-		DialTLS:         dialTLS,
+		// DialTLS:         dialTLS,
 	}
 
 	return &Client{
@@ -71,13 +71,13 @@ func NewClientWithCer(certificate tls.Certificate) *Client {
 }
 
 func NewClientWithToken(token *token.Token) *Client {
-	transport := &http2.Transport{
-		DialTLS: dialTLS,
-	}
+	// transport := &http2.Transport{
+	// 	DialTLS: dialTLS,
+	// }
 	return &Client{
 		httpClient: &http.Client{
-			Transport: transport,
-			Timeout:   _HTTPClientTimeOut,
+			// Transport: transport,
+			Timeout: _HTTPClientTimeOut,
 		},
 		host:  _DefaultHost,
 		token: token,
@@ -161,7 +161,6 @@ func (c *Client) PushWithContext(ctx context.Context, m *Message) (*Response, er
 		return response, nil
 	}
 	return nil, errors.New("unknown error")
-
 }
 
 func (c *Client) requestWithContext(ctx context.Context, req *http.Request) (*http.Response, error) {
