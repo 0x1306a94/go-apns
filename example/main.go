@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/king129/go-apns"
 	"github.com/king129/go-apns/cer"
@@ -18,7 +19,10 @@ func main() {
 
 func UsingCer() {
 
-	cer, err := cert.FromP12File("xxxx", "xxx")
+	p12Path := os.Getenv("P12PATH")
+	p12Passwd := os.Getenv("P12PASSWD")
+
+	cer, err := cert.FromP12File(p12Path, p12Passwd)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -46,16 +50,14 @@ func UsingCer() {
 
 func UsingAuthKey() {
 
-	authKey, err := token.AuthKeyFromFile("xxxx")
+	authKeyPath := os.Getenv("AUTHKEY")
+	teamID := os.Getenv("TEAMID")
+	keyID := os.Getenv("KEYID")
+
+	token, err := token.NewToken(authKeyPath, teamID, keyID)
 	if err != nil {
 		fmt.Println(err)
 		return
-	}
-
-	token := &token.Token{
-		AuthKey: authKey,
-		TeamID:  "xxxx",
-		KeyID:   "xxxx",
 	}
 
 	client := apns.NewClientWithToken(token)
