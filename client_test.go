@@ -52,17 +52,13 @@ func TestClient_UsignCer(t *testing.T) {
 func TestClient_UsignToken(t *testing.T) {
 
 	authKeyPath := os.Getenv("AUTHKEY")
+	teamID := os.Getenv("TEAMID")
+	keyID := os.Getenv("KEYID")
 
-	authKey, err := token.AuthKeyFromFile(authKeyPath)
+	token, err := token.NewToken(authKeyPath, teamID, keyID)
 	if err != nil {
-		fmt.Println(err)
+		t.Error(err)
 		return
-	}
-
-	token := &token.Token{
-		AuthKey: authKey,
-		TeamID:  "xxxx",
-		KeyID:   "xxxx",
 	}
 
 	client := NewClientWithToken(token)

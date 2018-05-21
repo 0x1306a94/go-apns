@@ -17,9 +17,9 @@ const (
 )
 
 var (
-	AuthKeyNotPEM   = errors.New("AuthKey must be a valid .p8 PEM file")
-	AuthKeyNotECDSA = errors.New("AuthKey must be of type ecdsa.PrivateKey")
-	AuthKeyNil      = errors.New("AuthKey was nil")
+	AuthKeyNotPEM   = errors.New("authKey must be a valid p8 PEM file")
+	AuthKeyNotECDSA = errors.New("authKey must be of type ecdsa.PrivateKey")
+	AuthKeyNil      = errors.New("authKey was nil")
 )
 
 type Token struct {
@@ -55,6 +55,28 @@ func AuthKeyFromData(data []byte) (*ecdsa.PrivateKey, error) {
 		return nil, AuthKeyNotECDSA
 
 	}
+}
+
+func NewToken(authKeyPath, teamID, keyID string) (*Token, error) {
+	if authKeyPath == "" {
+		return nil, errors.New("authKeyPath cannot be empty")
+	}
+	if teamID == "" {
+		return nil, errors.New("teamID cannot be empty")
+	}
+	if keyID == "" {
+		return nil, errors.New("keyID cannot be empty")
+	}
+	authKey, err := AuthKeyFromFile(authKeyPath)
+	if err != nil {
+		return nil, err
+	}
+	token := &Token{
+		AuthKey: authKey,
+		TeamID:  teamID,
+		KeyID:   keyID,
+	}
+	return token, nil
 }
 
 func (t *Token) Expired() bool {

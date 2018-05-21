@@ -60,16 +60,11 @@ import (
 	"fmt"
 )
 
-authKey, err := token.AuthKeyFromFile("xxxx")
+
+token, err := token.NewToken(authKeyPath, teamID, keyID)
 if err != nil {
 	fmt.Println(err)
 	return
-}
-	
-token := &token.Token{
-	AuthKey:authKey,
-	TeamID: "xxxx",
-	KeyID: "xxxx",
 }
 	
 client := apns.NewClientWithToken(token)
