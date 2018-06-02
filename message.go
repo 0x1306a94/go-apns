@@ -29,11 +29,11 @@ var (
 type Message struct {
 	ApnsID      string          `json:"apns_id,omitempty"`
 	CollapseID  string          `json:"collapse_id,omitempty"`
-	DeviceToken string          `json:"device_token"` // App Bundle ID
-	Topic       string          `json:"topic"`
+	DeviceToken string          `json:"device_token"`
+	Topic       string          `json:"topic"` // App Bundle ID
 	Expiration  int64           `json:"expiration,omitempty"`
 	Priority    MessagePriority `json:"priority,omitempty"`
-	Payload     *MessagePayload `json:"payload"`
+	Payload     *Payload        `json:"payload"`
 }
 
 func (m *Message) validationIsAvailable() error {

@@ -20,7 +20,7 @@ import (
 const (
 	_HostDevelopment = "https://api.development.push.apple.com"
 	_HostProduction  = "https://api.psuh.apple.com"
-	_DefaultHost     = _HostDevelopment
+	_DefaultAPNSHost = _HostDevelopment
 )
 
 var (
@@ -66,7 +66,7 @@ func NewClientWithCer(certificate tls.Certificate) *Client {
 			Timeout:   _HTTPClientTimeOut,
 		},
 		certificate: certificate,
-		host:        _DefaultHost,
+		host:        _DefaultAPNSHost,
 	}
 }
 
@@ -79,7 +79,7 @@ func NewClientWithToken(token *token.Token) *Client {
 			// Transport: transport,
 			Timeout: _HTTPClientTimeOut,
 		},
-		host:  _DefaultHost,
+		host:  _DefaultAPNSHost,
 		token: token,
 	}
 }

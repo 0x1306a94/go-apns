@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	TokenExpired = 3000
+	_TokenExpired = 3000
 )
 
 var (
@@ -58,7 +58,7 @@ func AuthKeyFromData(data []byte) (*ecdsa.PrivateKey, error) {
 }
 
 func (t *Token) Expired() bool {
-	return time.Now().Unix() >= (t.IssuedAt + TokenExpired)
+	return time.Now().Unix() >= (t.IssuedAt + _TokenExpired)
 }
 func (t *Token) GenerateIfExpired() {
 	t.Lock()
