@@ -19,71 +19,80 @@ go get github.com/king129/go-apns
 * Using p12 certificate
 
 ```go
-import (
-   "github.com/king129/go-apns"
-   "github.com/king129/go-apns/cer"
-   "fmt"
-)
+    import (
+            "github.com/king129/go-apns"
+            "github.com/king129/go-apns/cer"
+            "fmt"
+         )
     
-cer, err := cert.FromP12File("xxxx", "xxx")
-if err != nil {
-	fmt.Println(err)
-	return
-}
+    cer, err := cert.FromP12File(p12FilePath, p12Password)
+	if err != nil {
+		t.Error(err)
+	}
 
-client := apns.NewClientWithCer(cer)
+	client := NewClientWithCer(cer)
 
-m := &apns.Message{
-	Topic: "me.kinghub.apns.demo",
-	DeviceToken: "xxxxxxxxxxxxxxxxx",
-	Payload: &apns.MessagePayload{
-		Aps: &apns.MessageAps{
-			Alert: &apns.MessageAlert{
-				Title: "test",
-				Body: "xxxxxx",
-			},
-			Badeg: 100,
-			Sound: apns.MessageAPNSSoundDefault,
-		},
-	},
-}
+	payload := NewPayload()
+	payload.Body("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试")
+	payload.Title("标题")
+	payload.SubTitle("子标题")
+	payload.Badge(100)
+	payload.Sound(MessageAPNSSoundDefault)
+	m := &Message{
+		Topic:       "com.taihe.test.moblink",
+		DeviceToken: "ac8a3585166d60abd44867195b8f3edb63f4a2d1b2bb77c896913b7dd68716b8",
+		Payload:     payload,
+	}
 
-client.Push(m)
+	resp, err := client.Push(m)
+	if err != nil {
+		t.Error(err)
+	}
+	if !resp.Success() {
+		t.Error(resp.Reason)
+	} else {
+		fmt.Println("发送成功 apns-id:", resp.ApnsID)
+	}
 
 ```
 * Using authKey
 
 ```go
-import (
-	"github.com/king129/go-apns"
-	"github.com/king129/go-apns/token"
-	"fmt"
-)
+    import (
+        "github.com/king129/go-apns"
+        "github.com/king129/go-apns/token"
+        "fmt"
+    )
 
+    token, err := token.NewToken(authKeyPath, teamID, keyID)
+	if err != nil {
+		t.Error(err)
+		return
+	}
 
-token, err := token.NewToken(authKeyPath, teamID, keyID)
-if err != nil {
-	fmt.Println(err)
-	return
-}
-	
-client := apns.NewClientWithToken(token)
-	
-m := &apns.Message{
-	Topic: "me.kinghub.apns.demo",
-	DeviceToken: "xxxxxxxxxxxxxxxxx",
-	Payload: &apns.MessagePayload{
-		Aps: &apns.MessageAps{
-			Alert: &apns.MessageAlert{
-				Title: "test",
-				Body: "xxxxxx",
-			},
-			Badeg: 100,
-			Sound: apns.MessageAPNSSoundDefault,
-		},
-	},
-}
-client.Push(m)
+	client := NewClientWithToken(token)
+
+	payload := NewPayload()
+	payload.Body("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试")
+	payload.Title("标题")
+	payload.SubTitle("子标题")
+	payload.Badge(100)
+	payload.Sound(MessageAPNSSoundDefault)
+	m := &Message{
+		Topic:       "com.taihe.test.moblink",
+		DeviceToken: "ac8a3585166d60abd44867195b8f3edb63f4a2d1b2bb77c896913b7dd68716b8",
+		Payload:     payload,
+	}
+
+	resp, err := client.Push(m)
+	if err != nil {
+		t.Error(err)
+	}
+	if !resp.Success() {
+		t.Error(resp.Reason)
+	} else {
+		fmt.Println("发送成功 apns-id:", resp.ApnsID)
+	}
 
 ```
 
