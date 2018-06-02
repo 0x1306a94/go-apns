@@ -21,20 +21,16 @@ func TestClient_UsignCer(t *testing.T) {
 
 	client := NewClientWithCer(cer)
 
+	payload := NewPayload()
+	payload.Body("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试")
+	payload.Title("标题")
+	payload.SubTitle("子标题")
+	payload.Badge(100)
+	payload.Sound(MessageAPNSSoundDefault)
 	m := &Message{
 		Topic:       "com.taihe.test.moblink",
 		DeviceToken: "ac8a3585166d60abd44867195b8f3edb63f4a2d1b2bb77c896913b7dd68716b8",
-		Payload: &MessagePayload{
-			Aps: &MessageAps{
-				Alert: &MessageAlert{
-					Title:    "标题",
-					SubTitle: "子标题",
-					Body:     "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
-				},
-				Badge: 100,
-				Sound: MessageAPNSSoundDefault,
-			},
-		},
+		Payload:     payload,
 	}
 
 	resp, err := client.Push(m)
@@ -63,20 +59,16 @@ func TestClient_UsignToken(t *testing.T) {
 
 	client := NewClientWithToken(token)
 
+	payload := NewPayload()
+	payload.Body("测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试")
+	payload.Title("标题")
+	payload.SubTitle("子标题")
+	payload.Badge(100)
+	payload.Sound(MessageAPNSSoundDefault)
 	m := &Message{
 		Topic:       "com.taihe.test.moblink",
 		DeviceToken: "ac8a3585166d60abd44867195b8f3edb63f4a2d1b2bb77c896913b7dd68716b8",
-		Payload: &MessagePayload{
-			Aps: &MessageAps{
-				Alert: &MessageAlert{
-					Title:    "标题",
-					SubTitle: "子标题",
-					Body:     "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
-				},
-				Badge: 100,
-				Sound: MessageAPNSSoundDefault,
-			},
-		},
+		Payload:     payload,
 	}
 
 	resp, err := client.Push(m)

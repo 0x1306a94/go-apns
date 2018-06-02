@@ -1,5 +1,9 @@
 package apns
 
+import (
+	"encoding/json"
+)
+
 /*
 {
      "aps" : {
@@ -40,22 +44,23 @@ launch-image：点击推送消息或者移动事件滑块时，显示的图片�
 // 官方 json payload 定义
 https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/creating_a_remote_notification_payload#2943363
 */
-type MessagePayload struct {
-	Aps    *MessageAps            `json:"aps"`
+type Payload struct {
+	Aps    *aps                   `json:"aps"`
 	Custom map[string]interface{} `json:"custom,omitempty"`
 }
 
-type MessageAps struct {
-	Alert            *MessageAlert `json:"alert"`
-	Badge            int64         `json:"badge,omitempty"`
-	Sound            string        `json:"sound,omitempty"`
-	ThreadID         string        `json:"thread-id,omitempty"`
-	ContentAvailable int           `json:"content-available,omitempty"`
-	MutableContent   int           `json:"mutable-content,omitempty"`
-	Category         string        `json:"category,omitempty"`
+type aps struct {
+	Alert            *alert      `json:"alert"`
+	Badge            interface{} `json:"badge,omitempty"`
+	Sound            string      `json:"sound,omitempty"`
+	ThreadID         string      `json:"thread-id,omitempty"`
+	ContentAvailable int         `json:"content-available,omitempty"`
+	MutableContent   int         `json:"mutable-content,omitempty"`
+	Category         string      `json:"category,omitempty"`
+	URLArgs          []string    `json:"url-args,omitempty"`
 }
 
-type MessageAlert struct {
+type alert struct {
 	Title           string `json:"title"`
 	SubTitle        string `json:"subtitle,omitempty"`
 	Body            string `json:"body,omitempty"`
@@ -67,4 +72,138 @@ type MessageAlert struct {
 	LocKey          string `json:"loc-key,omitempty"`
 	LocArgs         string `json:"loc-args,omitempty"`
 	LaunchImage     string `json:"launch-image,omitempty"`
+}
+
+func NewPayload() *Payload {
+	return &Payload{
+		Aps: &aps{
+			Alert: &alert{},
+		},
+	}
+}
+func (p *Payload) AddCustom(k string, v interface{}) *Payload {
+	if p.Custom == nil {
+		p.Custom = make(map[string]interface{})
+	}
+	p.Custom[k] = v
+	return p
+}
+
+func (p *Payload) Body(v string) *Payload {
+	p.aps().Alert.Body = v
+	return p
+}
+
+func (p *Payload) Badge(number int64) *Payload {
+	p.aps().Badge = number
+	return p
+}
+
+func (p *Payload) ZeroBadge() *Payload {
+	p.aps().Badge = 0
+	return p
+}
+
+func (p *Payload) UnsetBadge() *Payload {
+	p.aps().Badge = nil
+	return p
+}
+
+func (p *Payload) Sound(v string) *Payload {
+	p.aps().Sound = v
+	return p
+}
+
+func (p *Payload) ThreadID(v string) *Payload {
+	p.aps().ThreadID = v
+	return p
+}
+
+func (p *Payload) ContentAvailable() *Payload {
+	p.aps().ContentAvailable = 1
+	return p
+}
+
+func (p *Payload) UnsetContentAvailable() *Payload {
+	p.aps().ContentAvailable = 0
+	return p
+}
+
+func (p *Payload) MutableContent() *Payload {
+	p.aps().MutableContent = 1
+	return p
+}
+
+func (p *Payload) UnsetMutableContent() *Payload {
+	p.aps().MutableContent = 0
+	return p
+}
+
+func (p *Payload) Category(v string) *Payload {
+	p.aps().Category = v
+	return p
+}
+
+func (p *Payload) UnsetCategory(v string) *Payload {
+	p.aps().Category = ""
+	return p
+}
+
+func (p *Payload) URLArgs(v []string) *Payload {
+	p.aps().URLArgs = v
+	return p
+}
+
+func (p *Payload) Title(v string) *Payload {
+	p.aps().Alert.Title = v
+	return p
+}
+
+func (p *Payload) SubTitle(v string) *Payload {
+	p.aps().Alert.SubTitle = v
+	return p
+}
+func (p *Payload) TitleLocKey(v string) *Payload {
+	p.aps().Alert.TitleLocKey = v
+	return p
+}
+func (p *Payload) TitleLocArgs(v string) *Payload {
+	p.aps().Alert.TitleLocArgs = v
+	return p
+}
+func (p *Payload) SubTitleLocKey(v string) *Payload {
+	p.aps().Alert.SubTitleLocKey = v
+	return p
+}
+func (p *Payload) SubTitleLocArgs(v string) *Payload {
+	p.aps().Alert.SubTitleLocArgs = v
+	return p
+}
+func (p *Payload) ActionLocKey(v string) *Payload {
+	p.aps().Alert.ActionLocKey = v
+	return p
+}
+func (p *Payload) LocKey(v string) *Payload {
+	p.aps().Alert.LocKey = v
+	return p
+}
+func (p *Payload) LocArgs(v string) *Payload {
+	p.aps().Alert.LocArgs = v
+	return p
+}
+func (p *Payload) LaunchImage(v string) *Payload {
+	p.aps().Alert.LaunchImage = v
+	return p
+}
+
+func (p *Payload) String() string {
+	if data, err := json.Marshal(p); err != nil {
+		return ""
+	} else {
+		return string(data)
+	}
+}
+
+func (p *Payload) aps() *aps {
+	return p.Aps
 }
